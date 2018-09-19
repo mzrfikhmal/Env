@@ -4,53 +4,37 @@ sudo add-apt-repository -y ppa:ethereum/ethereum
 sudo apt-get update
 sudo apt-get install ethereum
 
+/*Create Account*/
+geth --datadir ethdata account new
+
 /*Create Genesis Block*/
-nano Genesis.json
+nano genesis.json
 
 /*Genesis Block*/
-Genesis.json
+genesis.json
 {
 
-"config": {
-
-"chainId": 15,
-
-"homesteadBlock": 0,
-
-"eip155Block": 0,
-
-"eip158Block": 0
-
-},
-
-"nonce": "0x0000000000000042",
-
-"mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-
-"difficulty": "0x200",
-
-"alloc": {},
-
-"coinbase": "0x0000000000000000000000000000000000000000",
-
-"timestamp": "0x00",
-
-"parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-
-"gasLimit": "0xffffffff",
-
-"alloc": {
-
-}
+    "config":{
+        "chainId":15,
+        "homesteadBlock":0,
+        "eip155Block":0,
+        "eip158Block":0
+    },
+    "difficulty":"200000",
+    "gasLimit":"2100000000",
+    "alloc":{
+        "Account address":{
+            "balance":"11111111111111111111111111111111"
+        },
+        "Second Account Address":{
+            "balance":"22222222222222222222222222222222"
+        }
+    }
 
 }
 
 /*Init the geth with Genesis.json*/
-geth init Genesis.json
+geth --datadir="ethdata" init genesis.json
 
-/*Launch geth*/
-geth --nodiscover console 2>> eth.log
-
-/*Create an Account on Node 1*/
-personal.newAccount()
-
+/*Start the node*/
+geth --datadir="ethdata" --networkid 15 --nodiscover console --unlock 52ced5207daddd2081f623cd3c4bc2ef30b8447f --rpc --rpcport "8000" --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi "eth,net,web3,miner,debug,personal,rpc"
