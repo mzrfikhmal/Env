@@ -1,0 +1,52 @@
+pragma solidity ^0.4.0;
+contract test {
+      uint256 id;
+      string name;
+      string content;
+      address owner;
+      
+   
+   constructor () public
+    {
+        owner = msg.sender;
+    }
+    
+    /*initialize and set owner*/
+    function contractOwner() internal
+    {
+        owner = msg.sender;
+    }
+    
+    /* destroy contract */
+    function kill() public 
+    {
+        if (msg.sender == owner)
+        selfdestruct(owner);
+    }
+    function setName (string newName) public
+    {
+        name = newName;
+        
+    }
+    function setContent (string newContent) public
+    {
+        content = newContent;
+    }
+    function getName() public view returns (string) 
+    {
+        return name;
+    }
+    function getContent() public view returns (string) 
+    {
+        return content;
+    }
+    function getOwner() public view returns (address) 
+    {
+        return owner;
+    }
+    function getMyAddress() public view returns (address) 
+    {
+        return msg.sender;
+    }
+    
+}
